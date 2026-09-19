@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_customer_category,customer.category.access,model_customer_category,base.group_user,1,1,1,1
-access_customer_category_tier,customer.category.tier.access,model_customer_category_tier,base.group_user,1,1,1,1
-access_meter_history,meter.history.access,model_meter_history,base.group_user,1,1,1,1
-access_meter_swap_wizard,meter.swap.wizard.access,model_meter_swap_wizard,base.group_user,1,1,1,1
