@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_meter_reading" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@name='reference']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_quantity']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_quantity']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_price_unit']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_subtotal']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']" position="before">
+            <td colspan="10" style="padding: 8px 0; border: none;">
+
+                <div t-if="o.partner_id.account_number or o.partner_id.meter_number" 
+                     style="margin-bottom: 12px; padding: 6px 10px; background-color: #f8f9fa; border-left: 4px solid #17a2b8; width: 100%;">
+                    
+                    <div t-if="o.partner_id.account_number" style="display: inline-block; margin-right: 25px;">
+                        <strong style="font-size: 12px; color: #333;">Account Number: </strong>
+                        <span style="font-size: 12px; font-weight: bold; color: #17a2b8;" t-field="o.partner_id.account_number"/>
+                    </div>
+
+                    <div t-if="o.partner_id.meter_number" style="display: inline-block;">
+                        <strong style="font-size: 12px; color: #333;">Meter Serial Number: </strong>
+                        <span style="font-size: 12px; font-weight: bold; color: #17a2b8;" t-field="o.partner_id.meter_number"/>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 4px;">
+                    <strong style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #555;">
+                        Meter Readings
+                    </strong>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+                    <thead>
+                        <tr style="background-color: #d6eaf8;">
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">New</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Previous</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.new_reading"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.previous_reading"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.actual_reading"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-bottom: 4px;">
+                    <strong style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #555;">
+                        Billing Summary
+                    </strong>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+                    <thead>
+                        <tr style="background-color: #d5f5e3;">
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Water Cost (KSh)</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Sewerage Cost (KSh)</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Total Amount (KSh)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.water_cost"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.sewerage_cost"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center; font-weight: bold;"><span t-field="line.total_amount"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-bottom: 4px;">
+                    <strong style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #555;">
+                        Product Summary
+                    </strong>
+                </div>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #f2f3f4;">
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: left; font-size: 11px;">Product</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Quantity (m³)</th>
+                            <th style="border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 11px;">Total Amount (KSh)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #aaa; padding: 6px;"><span t-field="line.product_id.name"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center;"><span t-field="line.actual_reading"/></td>
+                            <td style="border: 1px solid #aaa; padding: 6px; text-align: center; font-weight: bold;"><span t-field="line.total_amount"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

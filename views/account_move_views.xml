@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_meter_reading" model="ir.ui.view">
+        <field name="name">account.move.form.meter.reading</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Odoo 18/19 render two payment_reference fields on this form
+                 (header, and the Other Info > Sales tab), so scope to the
+                 header group to avoid a "several nodes match" ParseError. -->
+            <xpath expr="//group[@id='header_right_group']//field[@name='payment_reference']" position="after">
+                <field name="is_meter_swap_invoice" string="Meter Swap Invoice"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/list//field[@name='quantity']" position="before">
+                
+                <field name="old_meter_final" string="Old Meter Final" 
+                       column_invisible="not parent.is_meter_swap_invoice"/>
+                       
+                <field name="new_meter_start" string="New Meter Start" 
+                       column_invisible="not parent.is_meter_swap_invoice"/>
+                
+                <field name="previous_reading" string="Previous" readonly="not parent.is_meter_swap_invoice" force_save="1"/>
+                <field name="new_reading" string="New"/>
+                
+                <field name="actual_reading" string="Actual" readonly="1" force_save="1"/>
+                <field name="water_cost" string="Water Cost" readonly="1" force_save="1"/>
+                <field name="sewerage_cost" string="Sewerage Cost" readonly="1" force_save="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/list//field[@name='price_subtotal']" position="before">
+                <field name="total_amount" string="Total Amount" readonly="1" force_save="1"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

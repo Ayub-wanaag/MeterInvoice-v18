@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_meter_swap_wizard_form" model="ir.ui.view">
+        <field name="name">meter.swap.wizard.form</field>
+        <field name="model">meter.swap.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirm Meter Swap">
+                <div class="alert alert-warning" role="alert">
+                    Are you sure you want to swap this customer's meter?
+                    The current meter will be marked <strong>Replaced</strong>
+                    and a new <strong>Active</strong> meter history record
+                    will be created automatically.
+                </div>
+                <group>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="active_history_id" invisible="1"/>
+                    <field name="has_existing_reading" invisible="1"/>
+                    <field name="current_meter_number" readonly="1"/>
+                    <field name="final_reading" readonly="has_existing_reading"/>
+                    <field name="new_meter_number" placeholder="e.g. NCWSC 12345678"/>
+                </group>
+                <footer>
+                    <button string="Confirm Swap" type="object"
+                            name="action_confirm_swap" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_meter_swap_wizard" model="ir.actions.act_window">
+        <field name="name">Swap Meter</field>
+        <field name="res_model">meter.swap.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
